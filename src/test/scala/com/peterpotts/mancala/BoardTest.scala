@@ -12,15 +12,21 @@ class BoardTest extends WordSpec with Matchers {
 
   "A board" should {
     "initial" in {
-      val expected = " 13 12 11 10 9 8\n14       7\n 1 2 3 4 5 6"
-      val actual = board.display.replace("\t", " ")
+      val expected = "+13+12+11+10+9+8\n14+++++++7\n+1+2+3+4+5+6"
+      val actual = board.display.replace("\t", "+")
       actual should equal(expected)
     }
 
-    "move" in {
-      val (seeds, side) = side1.play(Reap(Bin(2)))
+    "reap" in {
+      val (seeds, side) = side1.reap(Bin(2))
       val end = Board(IndexedSeq(side0, side))
-      board.play(Move(1, Reap(Bin(2)))) should equal(seeds -> end)
+      board.reap(1, Bin(2)) should equal(seeds -> end)
+    }
+
+    "sow" in {
+      val side = side1.sow(Bin(2))
+      val end = Board(IndexedSeq(side0, side))
+      board.sow(1, Bin(2)) should equal(end)
     }
   }
 }

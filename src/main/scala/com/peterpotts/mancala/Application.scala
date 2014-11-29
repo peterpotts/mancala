@@ -5,6 +5,6 @@ object Application {
     val board = Board.initial
     println(board.display)
 
-    board.reapAndSow(0, 4)
+    board.reapAndSow(0)()
   }
 }

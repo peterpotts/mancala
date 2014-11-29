@@ -5,10 +5,11 @@ case class Side(bins: IndexedSeq[Int], mancala: Int) {
   require(bins.forall(_ >= 0), "A bin contains seeds")
   require(mancala >= 0, "A mancala contains seeds")
 
-  def play(farm: Farm): (Int, Side) = farm match {
-    case Reap(Bin(binId)) => bins(binId) -> copy(bins = bins.updated(binId, 0))
-    case Sow(Bin(binId)) => -1 -> copy(bins = bins.updated(binId, bins(binId) + 1))
-    case Sow(Mancala()) => -1 -> copy(mancala = mancala + 1)
+  def reap(bin: Bin): (Int, Side) = bins(bin.id) -> copy(bins = bins.updated(bin.id, 0))
+
+  def sow(cup: Cup): Side = cup match {
+    case Bin(binId) => copy(bins = bins.updated(binId, bins(binId) + 1))
+    case Mancala() => copy(mancala = mancala + 1)
   }
 }
 
